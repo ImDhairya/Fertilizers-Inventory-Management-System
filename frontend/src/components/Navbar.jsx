@@ -1,4 +1,6 @@
 import React from "react";
+import {Button} from "./ui/button";
+import {Link} from "react-router-dom";
 
 function Navbar() {
   return (
@@ -8,10 +10,21 @@ function Navbar() {
         Petrochemicals Sector
       </div>
       <div className=" flex m-5 justify-end space-x-4">
-        <div>Login</div>
-        <div>Help </div>
-        <div>Contact us </div>
-        <div>Logout </div>
+        <Link to={"/login"}>
+          <Button>Login</Button>
+        </Link>
+
+        <Link to={"/login"}>
+          <Button>About us</Button>
+        </Link>
+
+        <Link to={"/login"}>
+          <Button>Help</Button>
+        </Link>
+
+        <Link to={"/logout"}>
+          <Button variant="destructive">Logout</Button>
+        </Link>
       </div>
     </div>
   );
