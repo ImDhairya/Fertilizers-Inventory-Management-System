@@ -1,21 +1,21 @@
 import mongoose from "mongoose";
 
-const chemicals = new mongoose.model({
+const chemicalSchema = new mongoose.Schema({
   type: {
     type: String,
-    require: true,
+    required: true,
   },
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   amount: {
     type: Number,
-    require: true,
+    required: true,
   },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
   marketprice: {
     type: String,
@@ -29,6 +29,6 @@ const chemicals = new mongoose.model({
   similarproducts: {
     type: String,
   },
-});
+},  );
 
-export const Chemicals = mongoose.model("Chemicals", chemicals);
+export const Chemicals = mongoose.modals("Chemicals", chemicalSchema);
