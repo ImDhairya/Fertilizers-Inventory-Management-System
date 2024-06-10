@@ -1,8 +1,10 @@
 import {Users} from "../modals/userModel.js";
 import bcyrpt from "bcryptjs";
+import jwt from "jsonwebtoken";
 export const Register = async (req, res) => {
   try {
     const {email, username, password, name} = req.body;
+    console.log(username, email, password, name);
 
     if (!name || !username || !email || !password) {
       return res.status(400).json({
@@ -37,6 +39,7 @@ export const Register = async (req, res) => {
 
 export const login = async (req, res) => {
   const {email, password} = req.body;
+  console.log(email, password);
   try {
     if (!email || !password) {
       return res.status(400).json({
@@ -45,41 +48,37 @@ export const login = async (req, res) => {
       });
     }
 
-    const user = await Users.find({email});
+    const user = await Users.findOne({email});
 
+    // console.log(user);
     if (!user) {
-      return res.json({
+      return res.status(400).json({
         message: "Cannot find the user please try different name",
         success: false,
       });
     }
 
-    const isMatch = await bcyrpt(password, user.password);
+    const isMatch = await bcyrpt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({
         message: "Incorrect details",
         success: false,
       });
     }
+    const token = await jwt.sign({userId: user._id}, process.env.TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
+    return res.status(201).json({
+      messagee: `Welcome back ${user.name}`,
+      user,
+      success: true,
+    });
 
-     const token = await jwt.sign(
-       {userId: user._id},
-       process.env.TOKEN_SECRET,
-       {
-         expiresIn: "1d",
-       }
-     );
-
-     return res
-       .status(201)
-       .cookie("token", token, {expiresIn: "1d", httpOnly: true})
-       .json({
-         messagee: `Welcome back ${user.name}`,
-         user,
-         success: true,
-       });
+    // return res.status(201).json({
+    //   messaeg: "Mil gaya mera hiralal",
+    // });
   } catch (error) {
-    return res.send("Error login", error);
+    return res.status(401).json({"Error login": error});
   }
 };
 

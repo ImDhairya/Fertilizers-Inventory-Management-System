@@ -1,8 +1,14 @@
 import React from "react";
 import {Button} from "./ui/button";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 function Navbar() {
+  const showLogin = useSelector((state) => state.navbar.showLogin);
+  const showAboutUs = useSelector((state) => state.navbar.showAboutUs);
+  const showHelp = useSelector((state) => state.navbar.showHelp);
+  const showLogout = useSelector((state) => state.navbar.showLogout);
+
   return (
     <div className=" h-[150px] border-4 mx-3 my-2 ">
       <Link to={"/home"}>
@@ -13,21 +19,28 @@ function Navbar() {
         </div>
       </Link>
       <div className=" flex m-5 justify-end space-x-4">
-        <Link to={"/login"}>
-          <Button>Login</Button>
-        </Link>
+        {showLogin && (
+          <Link to={"/login"}>
+            <Button>Login</Button>
+          </Link>
+        )}
+        {showAboutUs && (
+          <Link to={"/login"}>
+            <Button>About us</Button>
+          </Link>
+        )}
 
-        <Link to={"/login"}>
-          <Button>About us</Button>
-        </Link>
+        {showHelp && (
+          <Link to={"/login"}>
+            <Button>Help</Button>
+          </Link>
+        )}
 
-        <Link to={"/login"}>
-          <Button>Help</Button>
-        </Link>
-
-        <Link to={"/logout"}>
-          <Button variant="destructive">Logout</Button>
-        </Link>
+        {showLogout && (
+          <Link to={"/logout"}>
+            <Button variant="destructive">Logout</Button>
+          </Link>
+        )}
       </div>
     </div>
   );
