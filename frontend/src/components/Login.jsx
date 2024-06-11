@@ -26,7 +26,7 @@ function Login() {
         });
         setEmail("");
         setPassword("");
-        navigate("/dashboard");
+        navigate("/home/card");
       } else {
         await axios.post("http://localhost:5000/api/user/register", {
           email,

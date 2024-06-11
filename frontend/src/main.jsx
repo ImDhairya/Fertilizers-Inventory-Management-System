@@ -6,6 +6,8 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Login from "./components/Login.jsx";
 import {Provider} from "react-redux";
 import store from "../redux/store.js";
+// import Dashboard from "./components/Dashboard.jsx";
+import CardComponent from "./components/Card.jsx";
 /*
 This is showing how differnet routing can be done here 
 const router = createBrowserRouter([
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/home/login",
         element: <Login />,
+      },
+      {
+        path: "/home/card",
+        element: <CardComponent />,
       },
     ],
   },
