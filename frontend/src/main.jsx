@@ -37,15 +37,19 @@ const router = createBrowserRouter([
         path: "/home/login",
         element: <Login />,
       },
-      {
-        path: "/home/card",
-        element: <CardComponent />,
-      },
+      // {
+      //   path: "/home/card",
+      //   element: <CardComponent />,
+      // },
     ],
   },
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/home/card",
+    element: <CardComponent />,
   },
 ]);
 

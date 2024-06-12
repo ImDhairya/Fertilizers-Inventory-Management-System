@@ -36,7 +36,6 @@ export const Register = async (req, res) => {
     });
   }
 };
-
 export const login = async (req, res) => {
   const {email, password} = req.body;
   console.log(email, password);
@@ -50,7 +49,7 @@ export const login = async (req, res) => {
 
     const user = await Users.findOne({email});
 
-    // console.log(user);
+    console.log(user);
     if (!user) {
       return res.status(400).json({
         message: "Cannot find the user please try different name",
@@ -68,11 +67,15 @@ export const login = async (req, res) => {
     const token = await jwt.sign({userId: user._id}, process.env.TOKEN_SECRET, {
       expiresIn: "1d",
     });
-    return res.status(201).json({
-      messagee: `Welcome back ${user.name}`,
-      user,
-      success: true,
-    });
+
+    return res
+      .status(201)
+      .cookie("token", token, {expiresIn: "1d", httpOnly: true})
+      .json({
+        messagee: `Welcome back ${user.name}`,
+        user,
+        success: true,
+      });
 
     // return res.status(201).json({
     //   messaeg: "Mil gaya mera hiralal",
@@ -83,5 +86,8 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  console.log("Logged out");
+  return res.cookie("token", "", {expiresIn: new Date(Date.now())}).json({
+    message: "User logged out successfully ",
+    success: true,
+  });
 };

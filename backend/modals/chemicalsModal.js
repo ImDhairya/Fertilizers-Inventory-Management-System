@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const chemicalSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -17,18 +13,23 @@ const chemicalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  marketprice: {
-    type: String,
-  },
-  manufacturingdate: {
-    type: String,
-  },
-  expiringdate: {
-    type: String,
-  },
-  similarproducts: {
-    type: String,
-  },
-},  );
 
-export const Chemicals = mongoose.modals("Chemicals", chemicalSchema);
+  userDetails: {
+    type: String,
+    required: true,
+  },
+
+  mfgDate: {
+    type: String,
+  },
+  expDate: {
+    type: String,
+  },
+  similarProducts: {
+    type: String,
+  },
+});
+
+// export const Chemical = mongoose.modals("Chemicals", chemicalSchema);
+
+export const Chemical = mongoose.model("Chemicals", chemicalSchema);

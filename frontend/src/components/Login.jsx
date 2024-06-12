@@ -6,6 +6,8 @@ import Footer from "./Footer";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux";
+import {getUser} from "../../redux/userSlice";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +15,7 @@ function Login() {
   const [username, setUserName] = useState("");
   const [register, setRegister] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   async function handleSubmit(e) {
     e.preventDefault();
     // useEffect(() => {
@@ -20,20 +23,40 @@ function Login() {
     // }, []);
     try {
       if (!register) {
-        const res = await axios.post("http://localhost:5000/api/user/login", {
-          email,
-          password,
-        });
+        const res = await axios.post(
+          "http://localhost:5000/api/user/login",
+          {
+            email,
+            password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        console.log(res.data.user);
+        dispatch(getUser(res.data.user));
         setEmail("");
         setPassword("");
         navigate("/home/card");
       } else {
-        await axios.post("http://localhost:5000/api/user/register", {
-          email,
-          password,
-          username,
-          name,
-        });
+        await axios.post(
+          "http://localhost:5000/api/user/register",
+          {
+            email,
+            password,
+            username,
+            name,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
         setEmail("");
         setPassword("");
         setUserName("");

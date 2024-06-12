@@ -15,7 +15,7 @@ function App() {
         {" "}
         Hello this is petrochemicals and fertilizers company
       </h2>
-      <CardComponent />
+      {/* <CardComponent /> */}
       {/* <Outlet /> */}
       <Footer />
     </>

@@ -1,13 +1,19 @@
 import React from "react";
 import {Button} from "./ui/button";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
+import axios from "axios";
 
 function Navbar() {
   const showLogin = useSelector((state) => state.navbar.showLogin);
   const showAboutUs = useSelector((state) => state.navbar.showAboutUs);
   const showHelp = useSelector((state) => state.navbar.showHelp);
   const showLogout = useSelector((state) => state.navbar.showLogout);
+  const navigate = useNavigate();
+  async function handleLogout() {
+    const res = await axios.post("http://localhost:5000/api/user/logout");
+    navigate("/login");
+  }
 
   return (
     <div className=" h-[150px] border-4 mx-3 my-2 ">
@@ -38,7 +44,12 @@ function Navbar() {
 
         {showLogout && (
           <Link to={"/logout"}>
-            <Button variant="destructive">Logout</Button>
+            <Button
+              onClick={handleLogout}
+              variant="destructive"
+            >
+              Logout
+            </Button>
           </Link>
         )}
       </div>

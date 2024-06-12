@@ -1,5 +1,8 @@
 import * as React from "react";
 import {Button} from "./ui/button";
+import {useSelector} from "react-redux";
+import {useEffect} from "react";
+
 import {
   Card,
   CardContent,
@@ -24,6 +27,9 @@ import {Popover, PopoverContent, PopoverTrigger} from "./ui/popover";
 import {Checkbox} from "./ui/checkbox";
 import {Textarea} from "./ui/textarea";
 import {useState} from "react";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import Navbar from "./Navbar";
 
 function CardComponent() {
   const [isSimilarProductsChecked, setIsSimilarProductsChecked] =
@@ -34,8 +40,8 @@ function CardComponent() {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [similarProducts, setSimilarProducts] = useState("");
-  const [expirationDate, setExpirationDate] = useState("");
-  const [manufacturingDate, setManufacturingDate] = useState("");
+  const userId = useSelector((store) => store.user.user._id);
+  const navigate = useNavigate();
   // name, amount ,description, similar products, expiration date, manufacturing date
 
   const handleCheckboxChange = (event) => {
@@ -43,8 +49,33 @@ function CardComponent() {
     console.log(isSimilarProductsChecked);
   };
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    // console.log(name);
+    const res = await axios.post(
+      "http://localhost:5000/api/product/addProduct",
+      {
+        name,
+        amount,
+        description,
+        expDate,
+        similarProducts,
+        mfgDate,
+        userId,
+      }
+    );
+    if (res) {
+      console.log("Data sent");
+    }
+  }
+
+  function handleCancle() {
+    navigate("/home");
+  }
+
   return (
-    <div className=" items-center w-full justify-center flex p-5">
+    <div className=" items-center w-full justify-center flex flex-col p-5">
+      <Navbar className={"p-5"} />
       <Card className="">
         <CardHeader>
           <CardTitle>Add a chemical </CardTitle>
@@ -60,6 +91,7 @@ function CardComponent() {
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name">Name</Label>
                 <Input
+                  onChange={(e) => setName(e.target.value)}
                   id="name"
                   placeholder="Name of your project"
                 />
@@ -69,14 +101,18 @@ function CardComponent() {
                 <Input
                   type="number"
                   id="amount"
+                  onChange={(e) => setAmount(e.target.value)}
                   min={0}
-                  max={13}
+                  max={100}
                   placeholder="Enter your amount"
                 />
               </div>
               <div>
                 <Label htmlFor="description">Description</Label>
-                <Textarea placeholder="Describe the product" />
+                <Textarea
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Describe the product"
+                />
               </div>
 
               <div className="  items-center ">
@@ -97,6 +133,7 @@ function CardComponent() {
                 <div className="flex flex-col space-y-1.5">
                   <Input
                     id="similarProducts"
+                    onChange={(e) => setSimilarProducts(e.target.value)}
                     placeholder="Similar products"
                   />
                 </div>
@@ -191,8 +228,13 @@ function CardComponent() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline">Cancel</Button>
-          <Button>Deploy</Button>
+          <Button
+            onClick={handleCancle}
+            variant="outline"
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit}>Deploy</Button>
         </CardFooter>
       </Card>
     </div>
