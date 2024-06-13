@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema(
     marketCap: {
       type: String,
     },
+    chemId: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Chemical",
+      },
+    ],
   },
   {timestamps: true}
 );

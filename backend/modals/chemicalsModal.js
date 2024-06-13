@@ -5,6 +5,10 @@ const chemicalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
   amount: {
     type: Number,
     required: true,

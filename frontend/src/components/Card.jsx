@@ -40,6 +40,7 @@ function CardComponent() {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [similarProducts, setSimilarProducts] = useState("");
+  const email = useSelector((store) => store.user.user.email);
   const userId = useSelector((store) => store.user.user._id);
   const navigate = useNavigate();
   // name, amount ,description, similar products, expiration date, manufacturing date
@@ -58,6 +59,7 @@ function CardComponent() {
         name,
         amount,
         description,
+        email,
         expDate,
         similarProducts,
         mfgDate,

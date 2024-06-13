@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import {Chemical} from "../modals/chemicalsModal.js";
 import {Users} from "../modals/userModel.js";
 
@@ -8,12 +9,13 @@ export const addProduct = async (req, res) => {
       userId,
       amount,
       description,
+      email,
       expDate,
       similarProducts,
       mfgDate,
     } = req.body;
     const user = await Users.findById(userId).select("-password");
-    await Chemical.create({
+    const chemical = await Chemical.create({
       name,
       amount,
       userDetails: user,
@@ -21,7 +23,20 @@ export const addProduct = async (req, res) => {
       expDate,
       similarProducts,
       mfgDate,
+      email,
     });
+
+    let ObjId = new mongoose.Types.ObjectId(chemical._id);
+    console.log(ObjId);
+
+    await Users.updateOne(
+      {email: email},
+      {
+        $push: {
+          chemId: ObjId,
+        },
+      }
+    );
 
     return res.status(201).json({
       message: "Chemicals added successfully ",
