@@ -40,9 +40,16 @@ function CardComponent() {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [similarProducts, setSimilarProducts] = useState("");
-  const email = useSelector((store) => store.user.user.email);
-  const userId = useSelector((store) => store.user.user._id);
+  const [accessabel, setAccessable] = useState(true);
+  const user = useSelector((store) => store.user.user);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user || !user.email) {
+      setAccessable(false);
+      navigate("/home");
+    }
+  }, [user, navigate]);
   // name, amount ,description, similar products, expiration date, manufacturing date
 
   const handleCheckboxChange = (event) => {
@@ -59,11 +66,11 @@ function CardComponent() {
         name,
         amount,
         description,
-        email,
+        email: user.email,
         expDate,
         similarProducts,
         mfgDate,
-        userId,
+        userId: user._id,
       }
     );
     if (res) {
@@ -73,6 +80,10 @@ function CardComponent() {
 
   function handleCancle() {
     navigate("/home");
+    if (!accessabel) {
+      console.log(accessabel, "reture to home there");
+      return null;
+    }
   }
 
   return (
@@ -95,7 +106,7 @@ function CardComponent() {
                 <Input
                   onChange={(e) => setName(e.target.value)}
                   id="name"
-                  placeholder="Name of your project"
+                  placeholder="Name of chemical"
                 />
               </div>
               <div className="flex flex-col space-y-1.5">

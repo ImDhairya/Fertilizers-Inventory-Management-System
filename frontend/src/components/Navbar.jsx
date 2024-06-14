@@ -31,8 +31,8 @@ function Navbar() {
           </Link>
         )}
         {showAboutUs && (
-          <Link to={"/login"}>
-            <Button>About us</Button>
+          <Link to={"/home/card"}>
+            <Button>Add Products</Button>
           </Link>
         )}
 
