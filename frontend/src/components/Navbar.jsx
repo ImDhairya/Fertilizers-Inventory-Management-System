@@ -37,9 +37,14 @@ function Navbar() {
         )}
 
         {showHelp && (
-          <Link to={"/login"}>
-            <Button>Help</Button>
-          </Link>
+          <>
+            <Link to={"/login"}>
+              <Button>Help</Button>
+            </Link>
+            <Link to={"/home"}>
+              <Button>Home</Button>
+            </Link>
+          </>
         )}
 
         {showLogout && (

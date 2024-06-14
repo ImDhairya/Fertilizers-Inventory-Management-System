@@ -91,3 +91,21 @@ export const logout = (req, res) => {
     success: true,
   });
 };
+
+export const getUsers = async (req, res) => {
+  try {
+    const content = await Users.find({}).populate({
+      path: "chemId",
+      model: "Chemicals",
+    });
+    if (content) {
+      return res.status(201).json({
+        message: "Fetched data",
+        success: true,
+        data: content,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

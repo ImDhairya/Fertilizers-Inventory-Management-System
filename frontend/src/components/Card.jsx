@@ -43,11 +43,12 @@ function CardComponent() {
   const [accessabel, setAccessable] = useState(true);
   const user = useSelector((store) => store.user.user);
   const navigate = useNavigate();
+  console.log("Card par user", user);
 
   useEffect(() => {
     if (!user || !user.email) {
       setAccessable(false);
-      navigate("/home");
+      navigate("/login");
     }
   }, [user, navigate]);
   // name, amount ,description, similar products, expiration date, manufacturing date
@@ -80,10 +81,6 @@ function CardComponent() {
 
   function handleCancle() {
     navigate("/home");
-    if (!accessabel) {
-      console.log(accessabel, "reture to home there");
-      return null;
-    }
   }
 
   return (

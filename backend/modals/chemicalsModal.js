@@ -18,10 +18,17 @@ const chemicalSchema = new mongoose.Schema({
     required: true,
   },
 
-  userDetails: {
-    type: String,
-    required: true,
-  },
+  // userDetails: {
+  //   type: String,
+  //   required: true,
+  // },
+
+  userDetails: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users",
+    },
+  ],
 
   mfgDate: {
     type: String,

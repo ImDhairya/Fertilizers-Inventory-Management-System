@@ -36,11 +36,13 @@ function Login() {
             withCredentials: true,
           }
         );
+        // const userData = res.data.user;
+        // document.cookie = `token=${userData.token}; HttpOnly; Secure`;
         console.log(res.data.user);
         dispatch(getUser(res.data.user));
         setEmail("");
         setPassword("");
-        navigate("/home/card");
+        navigate("/home");
       } else {
         await axios.post(
           "http://localhost:5000/api/user/register",

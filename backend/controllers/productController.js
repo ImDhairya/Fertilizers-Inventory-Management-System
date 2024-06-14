@@ -14,7 +14,7 @@ export const addProduct = async (req, res) => {
       similarProducts,
       mfgDate,
     } = req.body;
-    const user = await Users.findById(userId).select("-password");
+    const user = await Users.findById(userId);
     const chemical = await Chemical.create({
       name,
       amount,
@@ -49,4 +49,20 @@ export const addProduct = async (req, res) => {
       success: false,
     });
   }
+};
+
+export const getProducts = async (req, res) => {
+  try {
+    const content = await Chemical.find({}).populate({
+      path: "userDetails",
+      model: "Users",
+    });
+    if (content) {
+      return res.status(201).json({
+        message: "Fetched data",
+        success: true,
+        data: content,
+      });
+    }
+  } catch (error) {}
 };
