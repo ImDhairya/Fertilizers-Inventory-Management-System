@@ -13,7 +13,7 @@ function App() {
   const [count, setCount] = useState(0);
   const [accessabel, setAccessable] = useState(true);
   const user = useSelector((store) => store.user.user);
-  console.log(user);
+  // console.log(user); // current user
   const navigate = useNavigate();
   useEffect(() => {
     if (!user || !user.email) {

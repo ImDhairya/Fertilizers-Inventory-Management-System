@@ -84,14 +84,12 @@ export const login = async (req, res) => {
     return res.status(401).json({"Error login": error});
   }
 };
-
 export const logout = (req, res) => {
   return res.cookie("token", "", {expiresIn: new Date(Date.now())}).json({
     message: "User logged out successfully ",
     success: true,
   });
 };
-
 export const getUsers = async (req, res) => {
   try {
     const content = await Users.find({}).populate({
