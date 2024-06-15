@@ -88,7 +88,7 @@ function CardComponent() {
       <Navbar className={"p-5"} />
       <Card className="">
         <CardHeader>
-          <CardTitle>Add a chemical </CardTitle>
+          <CardTitle>Add a product </CardTitle>
           <CardDescription>
             Describe the quantity and give detailed information about the
             product
