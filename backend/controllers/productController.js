@@ -64,5 +64,24 @@ export const getProducts = async (req, res) => {
         data: content,
       });
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteProduct = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const {ObjectId} = mongoose.mongo;
+    const _id = new ObjectId(id);
+    console.log(_id);
+    // const objectId = new mongoose.Types.ObjectId(id);
+    // console.log(objectId);
+    await Chemical.findByIdAndDelete({_id});
+    return res.json({
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

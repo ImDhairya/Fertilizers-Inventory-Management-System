@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import Data from "./Data";
 function Dashboard() {
   const [productData, setProductData] = useState("");
   const [userData, setUserData] = useState("");
@@ -38,77 +39,73 @@ function Dashboard() {
     // console.log(res.data.data[0]);
     setUserData(res.data.data);
   }
-  console.log(productData);
+
+  async function handleDelete(id) {
+    const res = await axios.post(
+      `http://localhost:5000/api/product/deleteProduct/${id}`
+    );
+    getProductData();
+  }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = {year: "numeric", month: "2-digit", day: "2-digit"};
+    return date.toLocaleDateString(undefined, options);
+  }
   return (
-    <div className=" grid grid-cols-3 p-5 space-x-5">
-      {productData &&
-        productData.map((data) => {
-          return (
-            <Card className="w-[550px]">
-              <CardHeader>
-                <CardTitle> {data.name} </CardTitle>
-                <CardDescription>Amount. {data.amount}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form>
-                  <div className="grid w-full items-center gap-4">
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="name">Description</Label>
-                      <CardDescription> {data.description}</CardDescription>
+    <div className=" flex items-center justify-center ">
+      <div className="">{/* <Data /> */}</div>
+      <div className="  grid p-5 space-y-5 justify-center items-center  space-x-1">
+        {productData &&
+          productData.map((data) => {
+            return (
+              <Card className="w-[1650px] flex p-5">
+                <CardHeader>
+                  <CardTitle> {data.name} </CardTitle>
+                  <CardDescription>Amount. {data.amount}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form>
+                    <div className="grid  w-full items-center gap-4">
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="name">Description</Label>
+                        <CardDescription> {data.description}</CardDescription>
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="name">Email: </Label>
+                        <CardDescription> {data.email}</CardDescription>
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="name">Manufacturing date</Label>
+                        <CardDescription>
+                          {" "}
+                          {formatDate(data.mfgDate)}
+                        </CardDescription>
+                      </div>
+                      <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="name">Expiration Date</Label>
+                        <CardDescription>
+                          {" "}
+                          {formatDate(data.expDate)}
+                        </CardDescription>
+                      </div>
                     </div>
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="name">Email: </Label>
-                      <CardDescription> {data.email}</CardDescription>
+                  </form>
+                  {data.similarProducts ? (
+                    <div className="flex flex-col mt-4 space-y-1.5">
+                      <Label htmlFor="name">Similar Products</Label>
+                      <CardDescription> {data.similarProducts}</CardDescription>
                     </div>
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="name">Manufacturing date</Label>
-                      <CardDescription> {data.mfgDate}</CardDescription>
-                    </div>
-                    <div className="flex flex-col space-y-1.5">
-                      <Label htmlFor="name">Expiration Date</Label>
-                      <CardDescription> {data.expDate}</CardDescription>
-                    </div>
-                  </div>
-                </form>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                {/* <Button variant="outline">Cancel</Button>
-                <Button>Deploy</Button> */}
-                {data.similarProducts ? (
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Similar Products</Label>
-                    <CardDescription> {data.similarProducts}</CardDescription>
-                  </div>
-                ) : null}
-              </CardFooter>
-            </Card>
-          );
-        })}
-      {/* <Card className="w-[350px]">
-        <CardHeader>
-          <CardTitle>Create project</CardTitle>
-          <CardDescription>
-            Deploy your new project in one-click.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  placeholder="Name of your project"
-                />
-              </div>
-            </div>
-          </form>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline">Cancel</Button>
-          <Button>Deploy</Button>
-        </CardFooter>
-      </Card> */}
+                  ) : null}
+                </CardContent>
+                <CardFooter className="flex justify-between"></CardFooter>
+                <div className=" w-[500px] ">
+                  <Data className="" />
+                </div>
+              </Card>
+            );
+          })}
+      </div>
     </div>
   );
 }

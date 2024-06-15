@@ -7,9 +7,12 @@ function Footer() {
         <div>
           <h2 className="text-white text-lg font-semibold mb-4">About Us</h2>
           <p className="mb-4">
-            Music School is a premier institution dedicated to teaching the art
-            and science of music. We nurture talent from the ground up,
-            fostering a vibrant community of musicians.
+            Welcome to the Integrated Data Management System (IDMS) for the
+            Chemical and Petrochemical sector. Our mission is to create a
+            centralized, web-based platform that streamlines the collection,
+            management, and dissemination of critical industry data.
+            
+            actionable intelligence and shaping the future of this vital sector.
           </p>
         </div>
         <div>
